@@ -1,10 +1,10 @@
 import boto3
+
 # Get the service resource
 sqs = boto3.resource('sqs', endpoint_url='http://localhost:4576')
 
 # Get the queue
 queue = sqs.get_queue_by_name(QueueName='test')
-
 
 # Messages are processed in batches:
 
