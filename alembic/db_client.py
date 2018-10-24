@@ -25,14 +25,15 @@ class DBClient:
         cursor.execute(sql)
         return cursor.fetchall()
 
-    def exec_ddl(self, sql):
+    def exec_ddl(self, sql, params):
         """
         Do some ddl, like create a table or some such
         :return:
         """
 
         cursor = self.conn.cursor()
-        cursor.execute(sql)
+        print(cursor.mogrify(sql, params))
+        cursor.execute(sql, params)
 
 
 

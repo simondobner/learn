@@ -9,7 +9,6 @@ class Env:
         self.create_learning_databases()
         self.dev_db_conn = DBClient()
         self.dev_db_conn.setup_connection('dev')
-        print(type(self.dev_db_conn))
 
         self.table_name = 'table_' + str(randint(1, 10000))
         print('the table in dev is called `{}`'.format(self.table_name))
@@ -34,20 +33,16 @@ class Env:
         """
         Create a table in dev
         
-        :return: 
+        :return: the name of the table it's created
         """
-        dev_table_sql = " create table {} ( col1 text, col2 int, col3 timestamp )".format(self.table_name)
-        print(dev_table_sql)
-        print(type(self.dev_db_conn))
+        dev_table_sql = "create table {} ( col1 text, col2 int, col3 timestamp )".format(self.table_name)
 
-        self.dev_db_conn.exec_ddl(dev_table_sql)
+        self.dev_db_conn.exec_ddl(dev_table_sql, None)
 
     def insert_random_records_into_dev(self):
         "insert a bunch of records into "
         for x in range(randint(100, 1000)):
-            sql = """
-            insert into {} values ('{}', '{}', current_timestamp)
-            """.format(self.table_name, ''.join([choice(string.ascii_lowercase) for i in range(15)]),
-                       randint(1, 10000))
+            sql = "insert into {} values (%s, %s, current_timestamp)".format(self.table_name)
             print(sql)
-            self.dev_db_conn.exec_ddl(sql)
+            self.dev_db_conn.exec_ddl(sql, [''.join([choice(string.ascii_lowercase) for i in range(15)]),
+                                      randint(1, 10000)])

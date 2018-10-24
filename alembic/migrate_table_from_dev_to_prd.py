@@ -13,6 +13,7 @@ class TableMigration:
         Create the table in dev
         :return:
         """
+
         self.setup.create_basic_table_in_dev()
         self.setup.insert_random_records_into_dev()
 
